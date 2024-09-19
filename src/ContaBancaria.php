@@ -22,4 +22,43 @@ class ContaBancaria
             $this->historicoTransacoes[] = ["tipo" => "deposito", "valor" => $valor, "data" => date("Y-m-d H:i:s")];
     }
     }
+
+    public function saque($valor)
+    {
+        if ($valor > 0 && $valor <= $this->saldo) {
+            $this->saldo -= $valor;
+            $this->historicoTransacoes[] = ["tipo" => "saque", "valor" => $valor, "data" => date("Y-m-d H:i:s")];
+        }elseif ($valor > $this-> saldo) {
+            throw new  \RuntimeException("Saldo insuficiente");
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
