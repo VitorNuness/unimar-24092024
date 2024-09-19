@@ -54,8 +54,10 @@ class ContaBancaria
         return $this->cliente;
     }
 
-
-
+    public function getHistoricoTransacoes()
+    {
+        return $this->historicoTransacoes;
+    }
 
 
 }
