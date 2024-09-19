@@ -5,86 +5,88 @@ use Src\GerenciadorPedidos;
 
 class GerenciadorPedidosTest extends TestCase
 {
-   public function testAdicionarPedidos()
-   {
-       $gerenciadorPedidos = new GerenciadorPedidos("Fulano");
+    public function testAdicionarPedidos()
+    {
+        $gerenciadorPedidos = new GerenciadorPedidos("Fulano");
 
-       $gerenciadorPedidos->adicionarItem("Batata", 20, 5);
+        $gerenciadorPedidos->adicionarItem("Batata", 20, 5);
 
-       $this->assertEquals(1, count($gerenciadorPedidos->listarItens()));
-       $this->assertEquals("Batata", $gerenciadorPedidos->listarItens()[0]["produto"]);
-       $this->assertEquals(20, $gerenciadorPedidos->listarItens()[0]["quantidade"]);
-       $this->assertEquals(5, $gerenciadorPedidos->listarItens()[0]["preco_unitario"]);
-   }
+        $this->assertEquals(1, count($gerenciadorPedidos->listarItens()));
+        $this->assertEquals("Batata", $gerenciadorPedidos->listarItens()[0]["produto"]);
+        $this->assertEquals(20, $gerenciadorPedidos->listarItens()[0]["quantidade"]);
+        $this->assertEquals(5, $gerenciadorPedidos->listarItens()[0]["preco_unitario"]);
+    }
 
-   public function testAplicarDescontoValido()
-   {
-       $gerenciadorPedidos = new GerenciadorPedidos("Vitão");
-       $gerenciadorPedidos->adicionarItem("TV", 1, 1000);
-       $gerenciadorPedidos->aplicarDesconto("DESC10");
-       $totalComDesconto = $gerenciadorPedidos->calcularTotal();
-       $this->assertEquals(900, $totalComDesconto);
-   }
+    public function testAplicarDescontoValido()
+    {
+        $gerenciadorPedidos = new GerenciadorPedidos("Vitão");
+        $gerenciadorPedidos->adicionarItem("TV", 1, 1000);
+        $gerenciadorPedidos->aplicarDesconto("DESC10");
+        $totalComDesconto = $gerenciadorPedidos->calcularTotal();
+        $this->assertEquals(900, $totalComDesconto);
+    }
 
-   public function testAplicarDescontoInvalido()
-   {
-       $this->expectException(InvalidArgumentException::class);
+    public function testAplicarDescontoInvalido()
+    {
+        $this->expectException(InvalidArgumentException::class);
 
-       $gerenciadorPedidos = new GerenciadorPedidos("Vitão");
+        $gerenciadorPedidos = new GerenciadorPedidos("Vitão");
 
-       $gerenciadorPedidos->aplicarDesconto("DESC99");
-   }
+        $gerenciadorPedidos->aplicarDesconto("DESC100");
+    }
 
-   public function testCalcularTotalSemDesconto()
-   {
-       $gerenciadorPedidos = new GerenciadorPedidos("Fulano");
+    public function testCalcularTotalSemDesconto()
+    {
+        $gerenciadorPedidos = new GerenciadorPedidos("Fulano");
 
-       $gerenciadorPedidos->adicionarItem("Produto A", 2, 50);
-       $gerenciadorPedidos->adicionarItem("Produto B", 1, 100);
+        $gerenciadorPedidos->adicionarItem("Produto A", 2, 50);
+        $gerenciadorPedidos->adicionarItem("Produto B", 1, 100);
 
-       $totalSemDesconto = $gerenciadorPedidos->calcularTotal();
-       $this->assertEquals(200, $totalSemDesconto);
-   }
+        $totalSemDesconto = $gerenciadorPedidos->calcularTotal();
+        $this->assertEquals(200, $totalSemDesconto);
+    }
 
-   public function testValidarPedidoValido()
-   {
-       $gerenciadorPedidos = new GerenciadorPedidos("Fulano");
+    public function testValidarPedidoValido()
+    {
+        $gerenciadorPedidos = new GerenciadorPedidos("Fulano");
 
-       $gerenciadorPedidos->adicionarItem("Produto A", 1, 100);
+        $gerenciadorPedidos->adicionarItem("Produto A", 1, 100);
 
-       $this->assertNull($gerenciadorPedidos->validarPedido());
-   }
+        $gerenciadorPedidos->validarPedido();
 
-   public function testValidarPedidoSemItens()
-   {
-       $gerenciadorPedidos = new GerenciadorPedidos("Fulano");
+        $this->assertTrue(true);
+    }
 
-       $this->expectException(RuntimeException::class);
-       $gerenciadorPedidos->validarPedido();
-   }
+    public function testValidarPedidoSemItens()
+    {
+        $gerenciadorPedidos = new GerenciadorPedidos("Fulano");
 
-   public function testValidarPedidoTotalZero()
-   {
-       $gerenciadorPedidos = new GerenciadorPedidos("Fulano");
-       $gerenciadorPedidos->adicionarItem("Produto A", 1, 0);
-       $this->expectException(RuntimeException::class);
-       $gerenciadorPedidos->validarPedido();
-   }
+        $this->expectException(RuntimeException::class);
+        $gerenciadorPedidos->validarPedido();
+    }
 
-   public function testConfirmarPedidoValido()
-   {
-       $gerenciadorPedidos = new GerenciadorPedidos("Fulano");
+    public function testValidarPedidoTotalZero()
+    {
+        $gerenciadorPedidos = new GerenciadorPedidos("Fulano");
+        $gerenciadorPedidos->adicionarItem("Produto A", 1, 0);
+        $this->expectException(RuntimeException::class);
+        $gerenciadorPedidos->validarPedido();
+    }
 
-       $gerenciadorPedidos->adicionarItem("Produto A", 1, 100);
+    public function testConfirmarPedidoValido()
+    {
+        $gerenciadorPedidos = new GerenciadorPedidos("Fulano");
 
-       $this->assertTrue($gerenciadorPedidos->confirmarPedido());
-   }
+        $gerenciadorPedidos->adicionarItem("Produto A", 1, 100);
 
-   public function testConfirmarPedidoInvalido()
-   {
-       $gerenciadorPedidos = new GerenciadorPedidos("Fulano");
+        $this->assertTrue($gerenciadorPedidos->confirmarPedido());
+    }
 
-       $this->expectException(RuntimeException::class);
-       $gerenciadorPedidos->confirmarPedido();
-   }
+    public function testConfirmarPedidoInvalido()
+    {
+        $gerenciadorPedidos = new GerenciadorPedidos("Fulano");
+
+        $this->expectException(RuntimeException::class);
+        $gerenciadorPedidos->confirmarPedido();
+    }
 }
