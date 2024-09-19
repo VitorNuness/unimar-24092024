@@ -14,4 +14,12 @@ class ContaBancaria
         $this->saldo = $saldoInicial;
         $this->historicoTransacoes = [];
     }
+
+    public function deposito($valor)
+    {
+        if ($valor > 0) {
+            $this->saldo += $valor;
+            $this->historicoTransacoes[] = ["tipo" => "deposito", "valor" => $valor, "data" => date("Y-m-d H:i:s")];
+    }
+    }
 }
