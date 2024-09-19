@@ -33,6 +33,17 @@ class ContaBancaria
         }
     }
 
+    public function transferir($valor, ContaBancaria $contaDestino)
+    {
+        if ($valor > 0 && $valor <= $this->saldo) {
+            $this->saldo -= $valor;
+            $contaDestino->deposito($valor);
+            $this->historicoTransacoes[] = ["tipo" => "transferencia", "valor" => $valor, "data" => date("Y-m-d H:i:s"), "destino" => $contaDestino->getCliente()];
+        }else {
+            throw new \RuntimeException("Saldo insuficiente para a transferencia");
+        }
+    }
+
 
 
 
