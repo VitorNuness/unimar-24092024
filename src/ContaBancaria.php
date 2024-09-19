@@ -44,6 +44,15 @@ class ContaBancaria
         }
     }
 
+    public function calcularJuros($taxa)
+    {
+        if ($taxa > 0) {
+            $juros = $this->saldo * ($taxa / 100);
+            $this->saldo += $juros;
+            $this->historicoTransacoes[] = ["tipo" => "juros", "valor" => $juros, "data" => date("Y-m-d H:i:s")];
+    }
+}
+
     public function getSaldo()
     {
         return $this->saldo;
