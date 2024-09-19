@@ -49,15 +49,10 @@ class ContaBancaria
         return $this->saldo;
     }
 
-
-
-
-
-
-
-
-
-
+    public function getCliente()
+    {
+        return $this->cliente;
+    }
 
 
 
