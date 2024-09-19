@@ -44,19 +44,10 @@ class ContaBancaria
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public function getSaldo()
+    {
+        return $this->saldo;
+    }
 
 
 
